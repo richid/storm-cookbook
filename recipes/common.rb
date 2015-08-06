@@ -1,3 +1,5 @@
+require 'json'
+
 include_recipe 'java'
 
 storm_user = node['storm']['user']
@@ -68,6 +70,6 @@ template "#{install_dir}/#{storm_version}/conf/storm.yaml" do
   owner storm_user
   group storm_user
   variables(
-    'storm_yaml' => node['storm']['storm_yaml']
+    'storm_yaml' => JSON.parse(node['storm']['storm_yaml'].to_hash.dup.to_json)
   )
 end
